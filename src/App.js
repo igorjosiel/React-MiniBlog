@@ -14,6 +14,8 @@ import Post from "./pages/Post/Post";
 
 // components
 import Layout from './components/Layout';
+import ProtectedRoute from './components/ProtectedRoute';
+import PublicRoute from './components/PublicRoute';
 import CreatePost from "./pages/CreatePost/CreatePost";
 import Search from "./pages/Search/Search";
 import Login from "./pages/Login/Login";
@@ -47,29 +49,54 @@ function App() {
           <div className="container">
             <Routes>
               <Route path="/" element={<Layout />}>
-                <Route path="/" element={<Home />} />
+                {/* Rotas padrão */}
+                <Route index element={<Home />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/posts/:id" element={<Post />} />
+                <Route path="/search" element={<Search />} />
+
+                {/* Rotas protegidas */}
                 <Route
                   path="/posts/create"
-                  element={user ? <CreatePost /> : <Navigate to="/login" />}
+                  element={
+                    <ProtectedRoute user={user}>
+                      <CreatePost />
+                    </ProtectedRoute>
+                  }
                 />
                 <Route
                   path="/posts/edit/:id"
-                  element={user ? <EditPost /> : <Navigate to="/login" />}
-                />
-                <Route path="/posts/:id" element={<Post />} />
-                <Route path="/search" element={<Search />} />
-                <Route
-                  path="/login"
-                  element={!user ? <Login /> : <Navigate to="/" />}
-                />
-                <Route
-                  path="/register"
-                  element={!user ? <Register /> : <Navigate to="/" />}
+                  element={
+                    <ProtectedRoute user={user}>
+                      <EditPost />
+                    </ProtectedRoute>
+                  }
                 />
                 <Route
                   path="/dashboard"
-                  element={user ? <Dashboard /> : <Navigate to="/login" />}
+                  element={
+                    <ProtectedRoute user={user}>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  }
+                />
+
+                {/* Rotas públicas */}
+                <Route
+                  path="/login"
+                  element={
+                    <PublicRoute user={user}>
+                      <Login />
+                    </PublicRoute>
+                  }
+                />
+                <Route
+                  path="/register"
+                  element={
+                    <PublicRoute user={user}>
+                      <Register />
+                    </PublicRoute>
+                  }
                 />
               </Route>
             </Routes>
