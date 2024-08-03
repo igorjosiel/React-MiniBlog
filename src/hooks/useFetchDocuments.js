@@ -45,17 +45,31 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
           q = await query(collectionRef, orderBy("createdAt", "desc"));
         }
 
-        await onSnapshot(q, (querySnapshot) => {
-          setDocuments(
-            querySnapshot.docs.map((doc) => ({
-              id: doc.id,
-              ...doc.data(),
-            }))
-          );
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+          if (!cancelled) {
+            setDocuments(
+              querySnapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+              }))
+            );
+
+            setLoading(false);
+          }
+        }, (error) => {
+          if (!cancelled) {
+            console.log(error);
+            setError(error.message);
+            setLoading(false);
+          }
         });
+
+        return () => unsubscribe();
       } catch (error) {
-        console.log(error);
-        setError(error.message);
+        if (!cancelled) {
+          console.log(error);
+          setError(error.message);
+        }
       }
 
       setLoading(false);
