@@ -1,3 +1,9 @@
+:root {
+  --primary-color: #FF9800;
+  --secondary-color: #4CAF50;
+  --white-color: #FFF;
+}
+
 body {
   background-color: #f6fcff;
   padding: 0;
@@ -74,12 +80,12 @@ textarea::placeholder {
   font-weight: bold;
   border: none;
   padding: 10px 15px;
-  font-size: 1em;
+  font-size: 0.8em;
 }
 
 .btn.btn-dark {
-  background-color: #000;
-  border-radius: 0;
+  background-color: var(--secondary-color);
+  border-radius: 5px;
 }
 
 .btn.btn-outline {
@@ -91,8 +97,9 @@ textarea::placeholder {
 }
 
 .btn:hover {
-  background-color: #0f730c;
-  color: #fff;
+  background-color: var(--white-color);
+  color: var(--secondary-color);
+  border: 2px solid var(--secondary-color);
 }
 
 .btn.btn-outline:hover {

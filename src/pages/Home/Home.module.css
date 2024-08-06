@@ -18,6 +18,10 @@
   width: 50%;
 }
 
+.title_posts {
+  margin: 5% 7%;
+}
+
 .noposts {
   text-align: center;
 }
@@ -28,4 +32,10 @@
 
 .noposts a {
   padding: 10px 25px;
+}
+
+@media (max-width: 700px) {
+  .search_form {
+    width: 100%;
+  }
 }
