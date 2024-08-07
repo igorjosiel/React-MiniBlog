@@ -1,7 +1,7 @@
 .footer {
   position: fixed;
   bottom: 0;
-  height: 90px;
+  height: 80px;
   width: 100vw;
   display: flex;
   flex-direction: column;

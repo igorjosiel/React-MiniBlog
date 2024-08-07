@@ -1,7 +1,11 @@
 :root {
+  /* colors */
   --primary-color: #FF9800;
   --secondary-color: #4CAF50;
   --white-color: #FFF;
+
+  /* borders */
+  --border-radius: 5px;
 }
 
 body {
@@ -22,20 +26,22 @@ textarea:focus {
 }
 
 a,
-nav button {
+button {
   text-decoration: none;
   background-color: transparent;
   border: none;
-  color: #000;
-  transition: 0.4s;
+  color: var(--white-color);
+  transition: 0.6s;
   font-size: 1em;
+  font-weight: 500;
   cursor: pointer;
   font-family: "Montserrat", sans-seri;
 }
 
 a:hover,
 nav button:hover {
-  color: #bbb;
+  background: var(--white-color);
+  color: var(--primary-color);
 }
 
 /* form styles */
