@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom';
+import styles from "./Layout.module.css";
 
 // components
 import Navbar from './Navbar';
@@ -9,7 +10,7 @@ const Layout = () => {
     <>
       <Navbar />
 
-      <main>
+      <main className={styles.main}>
         <Outlet />
       </main>
 
