@@ -5,7 +5,6 @@ import {
   updateProfile,
   signOut,
 } from "firebase/auth";
-
 import { useState, useEffect } from "react";
 
 export const useAuthentication = () => {

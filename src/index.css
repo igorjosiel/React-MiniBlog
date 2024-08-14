@@ -6,6 +6,10 @@
 
   /* borders */
   --border-radius: 5px;
+  --border-loading: 10px;
+
+  /* loading */
+  --loading-size: 50px;
 }
 
 body {

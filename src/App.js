@@ -11,17 +11,18 @@ import { useAuthentication } from "./hooks/useAuthentication";
 import Home from "./pages/Home/Home";
 import About from "./pages/About/About";
 import Post from "./pages/Post/Post";
-
-// components
-import Layout from './components/Layout';
-import ProtectedRoute from './components/ProtectedRoute';
-import PublicRoute from './components/PublicRoute';
 import CreatePost from "./pages/CreatePost/CreatePost";
 import Search from "./pages/Search/Search";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import EditPost from "./pages/EditPost/EditPost";
+
+// components
+import Layout from './components/Layout';
+import ProtectedRoute from './components/ProtectedRoute';
+import PublicRoute from './components/PublicRoute';
+import Loading from './components/Loading';
 
 // context
 import AuthProvider from "./contexts/AuthContext";
@@ -39,7 +40,7 @@ function App() {
   }, [auth]);
 
   if (loadingUser) {
-    return <p>Carregando...</p>;
+    return <Loading />;
   }
 
   return (

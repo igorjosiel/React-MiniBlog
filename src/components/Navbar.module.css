@@ -19,6 +19,7 @@
 .links_list {
   display: flex;
   list-style: none;
+  flex-wrap: wrap;
 }
 
 .links_list li {
