@@ -1,9 +1,9 @@
-import styles from "./CreatePost.module.css";
-
 import { useState } from "react";
-import { useInsertDocument } from "../../hooks/useInsertDocument";
 import { useNavigate } from "react-router-dom";
+import styles from "./CreatePost.module.css";
+import { useInsertDocument } from "../../hooks/useInsertDocument";
 import { useAuthValue } from "../../contexts/AuthContext";
+import Loading from "../../components/Loading";
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
@@ -67,6 +67,7 @@ const CreatePost = () => {
     <div className={styles.create_post}>
       <h2>Criar post</h2>
       <p>Escreva sobre o que quiser e compartilhe o seu conhecimento!</p>
+      
       <form onSubmit={handleSubmit}>
         <label>
           <span>Título:</span>
@@ -111,12 +112,11 @@ const CreatePost = () => {
             value={tags}
           />
         </label>
+
         {!response.loading && <button className="btn">Criar post!</button>}
-        {response.loading && (
-          <button className="btn" disabled>
-            Aguarde.. .
-          </button>
-        )}
+        
+        {response.loading && <Loading />}
+        
         {(response.error || formError) && (
           <p className="error">{response.error || formError}</p>
         )}

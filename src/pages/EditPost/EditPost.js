@@ -1,10 +1,10 @@
-import styles from "./EditPost.module.css";
-
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import styles from "./EditPost.module.css";
 import { useAuthValue } from "../../contexts/AuthContext";
 import { useFetchDocument } from "../../hooks/useFetchDocument";
 import { useUpdateDocument } from "../../hooks/useUpdateDocument";
+import Loading from "../../components/Loading";
 
 const EditPost = () => {
   const { id } = useParams();
@@ -131,12 +131,11 @@ const EditPost = () => {
                 value={tags}
               />
             </label>
+            
             {!response.loading && <button className="btn">Editar</button>}
-            {response.loading && (
-              <button className="btn" disabled>
-                Aguarde.. .
-              </button>
-            )}
+            
+            {response.loading && <Loading />}
+            
             {(response.error || formError) && (
               <p className="error">{response.error || formError}</p>
             )}

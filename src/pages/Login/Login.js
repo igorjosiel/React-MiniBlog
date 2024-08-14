@@ -1,7 +1,7 @@
-import styles from "./Login.module.css";
-
 import { useEffect, useState } from "react";
+import styles from "./Login.module.css";
 import { useAuthentication } from "../../hooks/useAuthentication";
+import Loading from "../../components/Loading";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -36,6 +36,7 @@ const Login = () => {
     <div className={styles.login}>
       <h1>Entrar</h1>
       <p>Faça o login para poder utilizar o sistema</p>
+
       <form onSubmit={handleSubmit}>
         <label>
           <span>E-mail:</span>
@@ -59,12 +60,11 @@ const Login = () => {
             value={password}
           />
         </label>
+
         {!loading && <button className="btn">Entrar</button>}
-        {loading && (
-          <button className="btn" disabled>
-            Aguarde...
-          </button>
-        )}
+        
+        {loading && <Loading />}
+        
         {error && <p className="error">{error}</p>}
       </form>
     </div>

@@ -1,7 +1,7 @@
-import styles from "./Register.module.css";
-
 import { useEffect, useState } from "react";
+import styles from "./Register.module.css";
 import { useAuthentication } from "../../hooks/useAuthentication";
+import Loading from "../../components/Loading";
 
 const Register = () => {
   const [displayName, setDisplayName] = useState("");
@@ -89,12 +89,11 @@ const Register = () => {
             value={confirmPassword}
           />
         </label>
+
         {!loading && <button className="btn">Entrar</button>}
-        {loading && (
-          <button className="btn" disabled>
-            Aguarde...
-          </button>
-        )}
+        
+        {loading && <Loading />}
+        
         {error && <p className="error">{error}</p>}
       </form>
     </div>
