@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./CreatePost.module.css";
 import { useInsertDocument } from "../../hooks/useInsertDocument";
 import { useAuthValue } from "../../contexts/AuthContext";
 import Loading from "../../components/Loading";
+import styles from "./CreatePost.module.css";
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");

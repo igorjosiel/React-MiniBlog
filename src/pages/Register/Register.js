@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import styles from "./Register.module.css";
 import { useAuthentication } from "../../hooks/useAuthentication";
 import Loading from "../../components/Loading";
+import styles from "./Register.module.css";
 
 const Register = () => {
   const [displayName, setDisplayName] = useState("");
@@ -25,6 +25,7 @@ const Register = () => {
 
     if (password !== confirmPassword) {
       setError("As senhas precisam ser iguais.");
+      
       return;
     }
 

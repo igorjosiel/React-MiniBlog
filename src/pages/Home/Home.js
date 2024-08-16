@@ -1,14 +1,8 @@
 import { useState } from "react";
-
-// CSS
-import styles from "./Home.module.css";
-
-// hooks
-import { useFetchDocuments } from "../../hooks/useFetchDocuments";
 import { useNavigate, Link } from "react-router-dom";
-
-// components
+import { useFetchDocuments } from "../../hooks/useFetchDocuments";
 import PostDetail from "../../components/PostDetail";
+import styles from "./Home.module.css";
 
 const Home = () => {
   const { documents: posts, loading } = useFetchDocuments("posts");

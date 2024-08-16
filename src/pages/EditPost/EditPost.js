@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import styles from "./EditPost.module.css";
-import { useAuthValue } from "../../contexts/AuthContext";
 import { useFetchDocument } from "../../hooks/useFetchDocument";
 import { useUpdateDocument } from "../../hooks/useUpdateDocument";
+import { useAuthValue } from "../../contexts/AuthContext";
 import Loading from "../../components/Loading";
+import styles from "./EditPost.module.css";
 
 const EditPost = () => {
   const { id } = useParams();

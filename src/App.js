@@ -1,11 +1,8 @@
-import "./App.css";
-
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
-
-// hooks
 import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useAuthentication } from "./hooks/useAuthentication";
+import { onAuthStateChanged } from "firebase/auth";
+import "./App.css";
 
 // pages
 import Home from "./pages/Home/Home";

@@ -66,6 +66,10 @@ label span {
   text-align: left;
 }
 
+h2 {
+  color: var(--primary-color);
+}
+
 input,
 textarea {
   box-sizing: border-box;
