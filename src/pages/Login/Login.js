@@ -21,12 +21,9 @@ const Login = () => {
     };
 
     const res = await login(user);
-
-    console.log(res);
   };
 
   useEffect(() => {
-    console.log(authError);
     if (authError) {
       setError(authError);
     }

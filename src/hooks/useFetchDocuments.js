@@ -58,7 +58,6 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
           }
         }, (error) => {
           if (!cancelled) {
-            console.log(error);
             setError(error.message);
             setLoading(false);
           }
@@ -67,7 +66,6 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
         return () => unsubscribe();
       } catch (error) {
         if (!cancelled) {
-          console.log(error);
           setError(error.message);
         }
       }
@@ -77,8 +75,6 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
 
     loadData();
   }, [docCollection, search, uid, cancelled]);
-
-  console.log(documents);
 
   useEffect(() => {
     return () => setCancelled(true);
