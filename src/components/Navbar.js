@@ -67,7 +67,7 @@ const Navbar = () => {
                 to="/todo"
                 className={({ isActive }) => (isActive ? styles.active : "")}
               >
-                Todo
+                A fazer
               </NavLink>
             </li>
           </>
