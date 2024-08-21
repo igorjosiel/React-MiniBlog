@@ -14,6 +14,7 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import EditPost from "./pages/EditPost/EditPost";
+import Todo from './pages/Todo/Todo';
 
 // components
 import Layout from './components/Layout';
@@ -75,6 +76,14 @@ function App() {
                   element={
                     <ProtectedRoute user={user}>
                       <Dashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/todo"
+                  element={
+                    <ProtectedRoute user={user}>
+                      <Todo />
                     </ProtectedRoute>
                   }
                 />
