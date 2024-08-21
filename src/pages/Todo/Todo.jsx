@@ -11,7 +11,7 @@ const Todo = () => {
         <h2>A Fazer</h2>
         <p>Gerencie as suas tarefas a fazer</p>
 
-        <Link to="/" className="btn">
+        <Link to="/todo/create" className="btn">
           Nova Tarefa
         </Link>
 
