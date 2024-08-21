@@ -21,7 +21,7 @@ const Home = () => {
 
   return (
     <div className={styles.home}>
-      <h2 className={styles.title_posts}>Veja os nossos posts mais recentes</h2>
+      <h2>Veja os nossos posts mais recentes</h2>
       
       <form className={styles.search_form} onSubmit={handleSubmit}>
         <input
