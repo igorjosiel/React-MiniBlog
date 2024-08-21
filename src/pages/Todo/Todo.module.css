@@ -14,3 +14,12 @@
   width: 80%;
   padding: 10px;
 }
+
+.todo_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  width: 80%;
+  padding: 10px;
+}

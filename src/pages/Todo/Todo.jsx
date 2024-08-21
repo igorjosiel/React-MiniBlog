@@ -21,6 +21,28 @@ const Todo = () => {
           <span>Esforço</span>
           <span>Ações</span>
         </div>
+
+        <div className={styles.todo_row}>
+          <p>Teste</p>
+          <p>Alta</p>
+          <p>Médio</p>
+
+          <div className={styles.actions}>
+            <Link to={`/`} className="btn btn-outline">
+              Ver
+            </Link>
+            <Link to={`/`} className="btn btn-outline">
+              Editar
+            </Link>
+
+            <button
+              onClick={() => console.log('Teste')}
+              className="btn btn-outline btn-danger"
+            >
+              Excluir
+            </button>
+          </div>
+        </div>
       </div>
     </>
   );
