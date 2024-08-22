@@ -20,6 +20,7 @@ const CreatePost = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     setFormError("");
 
     // validate image
@@ -37,7 +38,7 @@ const CreatePost = () => {
       setFormError("Por favor, preencha todos os campos!");
     }
 
-    if(formError) return
+    if(formError) return;
 
     insertDocument({
       title,

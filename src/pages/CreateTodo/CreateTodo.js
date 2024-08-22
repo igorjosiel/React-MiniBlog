@@ -1,115 +1,92 @@
-// import { useState } from "react";
+import { useState } from "react";
 // import { useNavigate } from "react-router-dom";
-// import { useInsertDocument } from "../../hooks/useInsertDocument";
-// import { useAuthValue } from "../../contexts/AuthContext";
+import { useInsertDocument } from "../../hooks/useInsertDocument";
+import { useAuthValue } from "../../contexts/AuthContext";
 // import Loading from "../../components/Loading";
 import styles from "./CreateTodo.module.css";
 
 const CreateTodo = () => {
-  // const [title, setTitle] = useState("");
-  // const [image, setImage] = useState("");
-  // const [body, setBody] = useState("");
+  const [task, setTask] = useState("");
+  const [priority, setPriority] = useState("");
+  const [effort, setEffort] = useState("");
   // const [tags, setTags] = useState([]);
-  // const [formError, setFormError] = useState("");
+  const [formError, setFormError] = useState("");
 
-  // const { user } = useAuthValue();
+  const { user } = useAuthValue();
 
   // const navigate = useNavigate();
 
-  // const { insertDocument, response } = useInsertDocument("posts");
+  const { insertDocument, response } = useInsertDocument("tasks");
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   setFormError("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    setFormError("");
 
-  //   // validate image
-  //   try {
-  //     new URL(image);
-  //   } catch (error) {
-  //     setFormError("A imagem precisa ser uma URL.");
-  //   }
+    // check values
+    if (!task) {
+      setFormError("Por favor, preencha todos os campos!");
+    }
 
-  //   // create tags array
-  //   const tagsArray = tags.split(",").map((tag) => tag.trim().toLowerCase());
+    if(formError) return;
 
-  //   // check values
-  //   if (!title || !image || !tags || !body) {
-  //     setFormError("Por favor, preencha todos os campos!");
-  //   }
-
-  //   if(formError) return
-
-  //   insertDocument({
-  //     title,
-  //     image,
-  //     body,
-  //     tags: tagsArray,
-  //     uid: user.uid,
-  //     createdBy: user.displayName,
-  //   });
-
-  //   // redirect to home page
-  //   navigate("/");
-  // };
+    insertDocument({
+      task,
+      priority,
+      effort,
+      uid: user.uid,
+      createdBy: user.displayName,
+    });
+  };
 
   return (
     <div className={styles.create_post}>
       <h2>Criar tarefa</h2>
       <p>Crie a sua próxima tarefa e não a deixe para depois!</p>
       
-      {/* <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <label>
           <span>Título:</span>
           <input
             type="text"
-            name="text"
+            name="task"
             required
-            placeholder="Pense num bom título..."
-            onChange={(e) => setTitle(e.target.value)}
-            value={title}
+            placeholder="Pense em uma tarefa..."
+            onChange={(e) => setTask(e.target.value)}
+            value={task}
           />
         </label>
         <label>
-          <span>URL da imagem:</span>
+          <span>Prioridade:</span>
           <input
             type="text"
-            name="image"
+            name="priority"
             required
-            placeholder="Insira uma imagem que representa seu post"
-            onChange={(e) => setImage(e.target.value)}
-            value={image}
+            placeholder="Digite a prioridade"
+            onChange={(e) => setPriority(e.target.value)}
+            value={priority}
           />
         </label>
         <label>
-          <span>Conteúdo:</span>
-          <textarea
-            name="body"
+          <span>Esforço:</span>
+          <input
+            type="text"
+            name="effort"
             required
             placeholder="Insira o conteúdo do post"
-            onChange={(e) => setBody(e.target.value)}
-            value={body}
-          ></textarea>
-        </label>
-        <label>
-          <span>Tags:</span>
-          <input
-            type="text"
-            name="tags"
-            required
-            placeholder="Insira as tags separadas por vírgula"
-            onChange={(e) => setTags(e.target.value)}
-            value={tags}
-          />
+            onChange={(e) => setEffort(e.target.value)}
+            value={effort}
+          ></input>
         </label>
 
-        {!response.loading && <button className="btn">Criar post!</button>}
+       <button className="btn">Criar tarefa</button>
         
-        {response.loading && <Loading />}
+        {/* {response.loading && <Loading />}
         
         {(response.error || formError) && (
           <p className="error">{response.error || formError}</p>
-        )}
-      </form> */}
+        )} */}
+      </form>
     </div>
   );
 };
