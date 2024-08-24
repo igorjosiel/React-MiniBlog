@@ -1,5 +1,5 @@
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useInsertDocument } from "../../hooks/useInsertDocument";
 import { useAuthValue } from "../../contexts/AuthContext";
 // import Loading from "../../components/Loading";
@@ -14,7 +14,7 @@ const CreateTodo = () => {
 
   const { user } = useAuthValue();
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const { insertDocument, response } = useInsertDocument("tasks");
 
@@ -37,10 +37,12 @@ const CreateTodo = () => {
       uid: user.uid,
       createdBy: user.displayName,
     });
+
+    navigate("/todo");
   };
 
   return (
-    <div className={styles.create_post}>
+    <div className={styles.create_todo}>
       <h2>Criar tarefa</h2>
       <p>Crie a sua próxima tarefa e não a deixe para depois!</p>
       
