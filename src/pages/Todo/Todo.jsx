@@ -1,10 +1,39 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { collection, query, where, getDocs } from "firebase/firestore";
 // import { useFetchDocuments } from "../../hooks/useFetchDocuments";
 // import { useDeleteDocument } from "../../hooks/useDeleteDocument";
-// import { useAuthValue } from "../../contexts/AuthContext";
+import { useAuthValue } from "../../contexts/AuthContext";
+import { db } from "../../firebase/config";
 import styles from "./Todo.module.css";
 
 const Todo = () => {
+  const [tasks, setTasks] = useState([]);
+
+  const { user } = useAuthValue();
+  const uid = user.uid;
+
+  const q = query(collection(db, "tasks"), where("uid", "==", uid));
+
+  useEffect(() => {
+    const getTasks = async () => {
+      try {
+        const querySnapshot = await getDocs(q);
+        const tasksArray = [];
+        
+        querySnapshot.forEach((doc) => {
+          tasksArray.push(doc.data());
+        });
+  
+        setTasks(tasksArray);
+      } catch (error) {
+        setTasks([]);
+      }
+    };
+  
+    getTasks();
+  }, []);
+
   return (
     <>
       <div className={styles.todo}>
@@ -22,27 +51,31 @@ const Todo = () => {
           <span>Ações</span>
         </div>
 
-        <div className={styles.todo_row}>
-          <p>Teste</p>
-          <p>Alta</p>
-          <p>Médio</p>
+        {tasks &&
+          tasks.map((task) => (
+            <div className={styles.todo_row}>
+              <p>{task.task}</p>
+              <p>{task.priority}</p>
+              <p>{task.effort}</p>
 
-          <div className={styles.actions}>
-            <Link to={`/`} className="btn btn-outline">
-              Ver
-            </Link>
-            <Link to={`/`} className="btn btn-outline">
-              Editar
-            </Link>
+              <div className={styles.actions}>
+                <Link to={`/`} className="btn btn-outline">
+                  Ver
+                </Link>
+                <Link to={`/`} className="btn btn-outline">
+                  Editar
+                </Link>
 
-            <button
-              onClick={() => console.log('Teste')}
-              className="btn btn-outline btn-danger"
-            >
-              Excluir
-            </button>
-          </div>
-        </div>
+                <button
+                  onClick={() => console.log('Teste')}
+                  className="btn btn-outline btn-danger"
+                >
+                  Excluir
+                </button>
+              </div>
+            </div>
+          ))
+        }
       </div>
     </>
   );
