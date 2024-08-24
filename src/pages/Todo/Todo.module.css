@@ -23,3 +23,8 @@
   width: 80%;
   padding: 10px;
 }
+
+.actions {
+  display: flex;
+  gap: 7px;
+}

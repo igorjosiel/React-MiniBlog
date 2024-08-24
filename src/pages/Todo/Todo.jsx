@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { FaBook, FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import { collection, query, where, getDocs } from "firebase/firestore";
 // import { useFetchDocuments } from "../../hooks/useFetchDocuments";
 // import { useDeleteDocument } from "../../hooks/useDeleteDocument";
@@ -65,18 +66,17 @@ const Todo = () => {
               <p>{task.effort}</p>
 
               <div className={styles.actions}>
-                <Link to={`/`} className="btn btn-outline">
-                  Ver
+                <Link to={`/`}>
+                  <FaBook title="Visualizar" size={20} color="#6E6E6E" />
                 </Link>
-                <Link to={`/`} className="btn btn-outline">
-                  Editar
+                <Link to={`/`}>
+                  <FaPencilAlt title="Editar" size={20} color="#1E90FF" />
                 </Link>
 
                 <button
                   onClick={() => console.log('Teste')}
-                  className="btn btn-outline btn-danger"
                 >
-                  Excluir
+                  <FaTrashAlt title="Excluir" size={20} color="#FF4500" />
                 </button>
               </div>
             </div>
