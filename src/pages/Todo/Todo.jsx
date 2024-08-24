@@ -16,6 +16,8 @@ const Todo = () => {
   const q = query(collection(db, "tasks"), where("uid", "==", uid));
 
   useEffect(() => {
+    let isMounted = true;
+
     const getTasks = async () => {
       try {
         const querySnapshot = await getDocs(q);
@@ -25,13 +27,17 @@ const Todo = () => {
           tasksArray.push(doc.data());
         });
   
-        setTasks(tasksArray);
+        if (isMounted) setTasks(tasksArray);
       } catch (error) {
         setTasks([]);
       }
     };
   
     getTasks();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (
