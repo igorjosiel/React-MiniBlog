@@ -1,11 +1,17 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import styles from "./TodoById.module.css";
 
 const TodoById = () => {
   const [task, setTask] = useState(null);
+
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1); // Voltar uma página no histórico
+  };
 
   const { id } = useParams();
 
@@ -39,11 +45,15 @@ const TodoById = () => {
   }, [id]);
 
   return (
-    <div className={styles.post_container}>
+    <div className={styles.todoById_container}>
       {task ? (
         <>
           <h2>{task.task}</h2>
-          {/* Renderize outros campos de tarefa aqui */}
+          <p>Criou a tarefa: {task.createdBy}</p>
+          <p>Esforço: {task.effort}</p>
+          <p>Prioridade: {task.priority}</p>
+
+          <button className="btn" onClick={goBack}>Voltar</button>
         </>
       ) : (
         <p>Task not found or loading...</p>
