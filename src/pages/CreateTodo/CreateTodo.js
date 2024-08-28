@@ -2,14 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useInsertDocument } from "../../hooks/useInsertDocument";
 import { useAuthValue } from "../../contexts/AuthContext";
-// import Loading from "../../components/Loading";
+import Loading from "../../components/Loading";
 import styles from "./CreateTodo.module.css";
 
 const CreateTodo = () => {
   const [task, setTask] = useState("");
   const [priority, setPriority] = useState("");
   const [effort, setEffort] = useState("");
-  // const [tags, setTags] = useState([]);
   const [formError, setFormError] = useState("");
 
   const { user } = useAuthValue();
@@ -86,11 +85,11 @@ const CreateTodo = () => {
 
        <button className="btn">Criar tarefa</button>
         
-        {/* {response.loading && <Loading />}
+        {response.loading && <Loading />}
         
         {(response.error || formError) && (
           <p className="error">{response.error || formError}</p>
-        )} */}
+        )}
       </form>
     </div>
   );
