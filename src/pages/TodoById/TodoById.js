@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Loading from "../../components/Loading";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import styles from "./TodoById.module.css";
 
 const TodoById = () => {
   const [task, setTask] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
@@ -19,6 +22,8 @@ const TodoById = () => {
     let isMounted = true;
 
     const getTasks = async () => {
+      setLoading(true);
+
       try {
         const q = query(collection(db, "tasks"), where("id", "==", Number(id)));
         const querySnapshot = await getDocs(q);
@@ -32,8 +37,12 @@ const TodoById = () => {
           setTask(tasksArray.length > 0 ? tasksArray[0] : null);
         }
       } catch (error) {
-        console.error("Error fetching task: ", error);
-        if (isMounted) setTask(null);
+        if (isMounted) {
+            setTask(null);
+            setError('Houve algum erro ao processar o documento. Tente novamente mais tarde!');
+          }
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -46,7 +55,7 @@ const TodoById = () => {
 
   return (
     <div className={styles.todoById_container}>
-      {task ? (
+      {task && (
         <>
           <h2>{task.task}</h2>
           <p>Criou a tarefa: {task.createdBy}</p>
@@ -55,9 +64,11 @@ const TodoById = () => {
 
           <button className="btn" onClick={goBack}>Voltar</button>
         </>
-      ) : (
-        <p>Task not found or loading...</p>
       )}
+
+      {loading && <Loading />}
+      
+      {error && <p className="error">{error}</p>}
     </div>
   );
 };
