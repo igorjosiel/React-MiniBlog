@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaBook, FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import { collection, query, where, getDocs } from "firebase/firestore";
-// import { useFetchDocuments } from "../../hooks/useFetchDocuments";
-// import { useDeleteDocument } from "../../hooks/useDeleteDocument";
 import { useAuthValue } from "../../contexts/AuthContext";
 import { db } from "../../firebase/config";
 import styles from "./Todo.module.css";
@@ -14,13 +12,12 @@ const Todo = () => {
   const { user } = useAuthValue();
   const uid = user.uid;
 
-  const q = query(collection(db, "tasks"), where("uid", "==", uid));
-
   useEffect(() => {
     let isMounted = true;
 
     const getTasks = async () => {
       try {
+        const q = query(collection(db, "tasks"), where("uid", "==", uid));
         const querySnapshot = await getDocs(q);
         const tasksArray = [];
         
@@ -39,7 +36,7 @@ const Todo = () => {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [uid]);
 
   return (
     <>
@@ -60,16 +57,16 @@ const Todo = () => {
 
         {tasks &&
           tasks.map((task) => (
-            <div className={styles.todo_row}>
+            <div className={styles.todo_row} key={task.id}>
               <p>{task.task}</p>
               <p>{task.priority}</p>
               <p>{task.effort}</p>
 
               <div className={styles.actions}>
-                <Link to={`/`}>
+                <Link to={`/todos/${task.id}`}>
                   <FaBook title="Visualizar" size={20} color="#6E6E6E" />
                 </Link>
-                <Link to={`/`}>
+                <Link to={`/todos/edit/${task.id}`}>
                   <FaPencilAlt title="Editar" size={20} color="#1E90FF" />
                 </Link>
 

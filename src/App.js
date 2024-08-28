@@ -16,6 +16,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import EditPost from "./pages/EditPost/EditPost";
 import Todo from './pages/Todo/Todo';
 import CreateTodo from './pages/CreateTodo/CreateTodo';
+import TodoById from './pages/TodoById/TodoById';
 
 // components
 import Layout from './components/Layout';
@@ -53,6 +54,7 @@ function App() {
                 <Route index element={<Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/posts/:id" element={<Post />} />
+                <Route path="/todos/:id" element={<TodoById />} />
                 <Route path="/search" element={<Search />} />
 
                 {/* Rotas protegidas */}

@@ -30,12 +30,15 @@ const CreateTodo = () => {
 
     if(formError) return;
 
+    const randomNumber = Math.floor(Math.random() * 10);
+
     insertDocument({
       task,
       priority,
       effort,
       uid: user.uid,
       createdBy: user.displayName,
+      id: randomNumber,
     });
 
     navigate("/todo");
