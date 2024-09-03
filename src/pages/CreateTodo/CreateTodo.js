@@ -4,6 +4,7 @@ import { useInsertDocument } from "../../hooks/useInsertDocument";
 import { useAuthValue } from "../../contexts/AuthContext";
 import Loading from "../../components/Loading";
 import styles from "./CreateTodo.module.css";
+import { addTaskAction } from "../../services/actions/tasksActions";
 
 const CreateTodo = () => {
   const [task, setTask] = useState("");
@@ -31,13 +32,15 @@ const CreateTodo = () => {
 
     const randomNumber = Math.floor(Math.random() * 10);
 
-    insertDocument({
+    addTaskAction({
       task,
       priority,
       effort,
       uid: user.uid,
       createdBy: user.displayName,
       id: randomNumber,
+    }).then((response) => {
+      console.log('ID: ', response);
     });
 
     navigate("/todo");
