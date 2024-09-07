@@ -1,49 +1,60 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useInsertDocument } from "../../hooks/useInsertDocument";
 import { useAuthValue } from "../../contexts/AuthContext";
 import Loading from "../../components/Loading";
 import styles from "./CreateTodo.module.css";
 import { addTaskAction } from "../../services/actions/tasksActions";
 
 const CreateTodo = () => {
-  const [task, setTask] = useState("");
-  const [priority, setPriority] = useState("");
-  const [effort, setEffort] = useState("");
-  const [formError, setFormError] = useState("");
+  const [formData, setFormData] = useState({
+    task: "",
+    priority: "",
+    effort: "",
+  });
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [idTask, setIdTask] = useState(null);
 
   const { user } = useAuthValue();
-
   const navigate = useNavigate();
 
-  const { insertDocument, response } = useInsertDocument("tasks");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    
-    setFormError("");
-
-    // check values
-    if (!task) {
-      setFormError("Por favor, preencha todos os campos!");
+  useEffect(() => {
+    if (!error && idTask) {
+      navigate("/todo");
     }
+  }, [error, message, idTask, navigate]);
 
-    if(formError) return;
+  const handleChange = (event) => {
+    const { name, value } = event.target;
 
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const { task, priority, effort } = formData;
     const randomNumber = Math.floor(Math.random() * 10);
 
-    addTaskAction({
+    setLoading(true);
+
+    const { message, success, idTask } = await addTaskAction({
       task,
       priority,
       effort,
       uid: user.uid,
       createdBy: user.displayName,
       id: randomNumber,
-    }).then((response) => {
-      console.log('ID: ', response);
     });
 
-    navigate("/todo");
+    setLoading(false);
+    setMessage(message);
+    setError(!success);
+    setIdTask(idTask);
   };
 
   return (
@@ -59,8 +70,8 @@ const CreateTodo = () => {
             name="task"
             required
             placeholder="Pense em uma tarefa..."
-            onChange={(e) => setTask(e.target.value)}
-            value={task}
+            onChange={handleChange}
+            value={formData.task}
           />
         </label>
         <label>
@@ -70,8 +81,8 @@ const CreateTodo = () => {
             name="priority"
             required
             placeholder="Digite a prioridade"
-            onChange={(e) => setPriority(e.target.value)}
-            value={priority}
+            onChange={handleChange}
+            value={formData.priority}
           />
         </label>
         <label>
@@ -81,18 +92,16 @@ const CreateTodo = () => {
             name="effort"
             required
             placeholder="Insira o conteúdo do post"
-            onChange={(e) => setEffort(e.target.value)}
-            value={effort}
+            onChange={handleChange}
+            value={formData.effort}
           ></input>
         </label>
 
-       <button className="btn">Criar tarefa</button>
+        <button className="btn">Criar tarefa</button>
         
-        {response.loading && <Loading />}
+        {loading && <Loading />}
         
-        {(response.error || formError) && (
-          <p className="error">{response.error || formError}</p>
-        )}
+        {error && <p className="error">{message}</p>}
       </form>
     </div>
   );
