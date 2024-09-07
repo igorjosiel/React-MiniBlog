@@ -30,7 +30,7 @@ const CreateTodo = () => {
       const timer = setTimeout(() => {
         setError(false);
       }, 3000);
-      
+
       return () => clearTimeout(timer);
     }
   }, [error]);
@@ -56,9 +56,9 @@ const CreateTodo = () => {
       task,
       priority,
       effort,
-      // uid: user.uid,
+      uid: user.uid,
       createdBy: user.displayName,
-      // id: randomNumber,
+      id: randomNumber,
     });
 
     setLoading(false);
