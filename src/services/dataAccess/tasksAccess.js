@@ -1,4 +1,11 @@
-import { collection, addDoc } from "firebase/firestore";
+import {
+    collection,
+    addDoc,
+    getDocs,
+    query,
+    where,
+    onSnapshot,
+} from "firebase/firestore";
 import { db } from "../../firebase/config";
 
 const addNewTask = async (data) => {
@@ -20,4 +27,18 @@ const addNewTask = async (data) => {
     }
 }
 
-export { addNewTask };
+const getTasks = async () => {
+    try {
+        const querySnapshot = await getDocs(collection(db, "tasks"));
+        
+        const response = querySnapshot.docs.map(doc => ({
+            ...doc.data(),
+        }));
+  
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export { addNewTask, getTasks };

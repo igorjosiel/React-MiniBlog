@@ -1,6 +1,6 @@
-import { addNewTask } from "../dataAccess/tasksAccess";
+import { addNewTask, getTasks } from "../dataAccess/tasksAccess";
 
-export async function addTaskAction(data) {
+const addTaskAction = async (data) => {
     const { task, priority, effort, uid, createdBy, id } = data;
 
     if (!task || !priority || !effort || !uid || !createdBy || !id) {
@@ -25,3 +25,23 @@ export async function addTaskAction(data) {
         };
     }
 }
+
+const getTasksAction = async () => {
+    try {
+        const response = await getTasks();
+
+        return {
+            success: true,
+            message: `Tarefas retornadas com sucesso!`,
+            data: response,
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: `Falha ao buscar as tarefas: ${error.message}`,
+            data: [],
+        }
+    }
+}
+
+export { addTaskAction, getTasksAction }

@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaBook, FaPencilAlt, FaTrashAlt } from "react-icons/fa";
-import { collection, query, where, getDocs } from "firebase/firestore";
 import { useAuthValue } from "../../contexts/AuthContext";
-import { db } from "../../firebase/config";
 import styles from "./Todo.module.css";
+import { getTasksAction } from '../../services/actions/tasksActions';
 
 const Todo = () => {
   const [tasks, setTasks] = useState([]);
@@ -14,25 +13,17 @@ const Todo = () => {
 
   useEffect(() => {
     let isMounted = true;
-
-    const getTasks = async () => {
-      try {
-        const q = query(collection(db, "tasks"), where("uid", "==", uid));
-        const querySnapshot = await getDocs(q);
-        const tasksArray = [];
-        
-        querySnapshot.forEach((doc) => {
-          tasksArray.push(doc.data());
-        });
   
-        if (isMounted) setTasks(tasksArray);
-      } catch (error) {
-        setTasks([]);
+    const getTasks = async () => {
+      const tasks = await getTasksAction();
+  
+      if (isMounted) {
+        setTasks(tasks.data);
       }
     };
   
     getTasks();
-
+  
     return () => {
       isMounted = false;
     };
