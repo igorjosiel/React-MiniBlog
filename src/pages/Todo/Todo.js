@@ -2,23 +2,32 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaBook, FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import { useAuthValue } from "../../contexts/AuthContext";
+import Loading from "../../components/Loading";
 import styles from "./Todo.module.css";
 import { getTasksAction } from '../../services/actions/tasksActions';
 
 const Todo = () => {
   const [tasks, setTasks] = useState([]);
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const { user } = useAuthValue();
   const uid = user.uid;
 
   useEffect(() => {
     let isMounted = true;
+
+    setLoading(true);
   
     const getTasks = async () => {
-      const tasks = await getTasksAction();
+      const { message, success, data } = await getTasksAction();
   
       if (isMounted) {
-        setTasks(tasks.data);
+        setLoading(false);
+        setTasks(data);
+        setMessage(message);
+        setError(!success);
       }
     };
   
@@ -70,6 +79,10 @@ const Todo = () => {
             </div>
           ))
         }
+
+        {loading && <Loading />}
+        
+        {error && <p className="error">{message}</p>}
       </div>
     </>
   );
