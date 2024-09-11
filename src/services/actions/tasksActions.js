@@ -1,4 +1,4 @@
-import { addNewTask, getTasks } from "../dataAccess/tasksAccess";
+import { addNewTask, getTaskById, getTasks } from "../dataAccess/tasksAccess";
 
 const addTaskAction = async (data) => {
     const { task, priority, effort, uid, createdBy, id } = data;
@@ -44,4 +44,22 @@ const getTasksAction = async () => {
     }
 }
 
-export { addTaskAction, getTasksAction }
+const getTaskByIdAction = async (taskId) => {
+    try {
+        const response = await getTaskById(taskId);
+
+        return {
+            success: true,
+            message: `Tarefa retornada com sucesso!`,
+            data: response[0],
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: `Falha ao buscar pela tarefa: ${error.message}`,
+            data: null,
+        }
+    }
+}
+
+export { addTaskAction, getTasksAction, getTaskByIdAction }

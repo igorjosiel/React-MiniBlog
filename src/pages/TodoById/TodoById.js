@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../../firebase/config";
+import { getTaskByIdAction } from '../../services/actions/tasksActions';
 import styles from "./TodoById.module.css";
 
 const TodoById = () => {
   const [task, setTask] = useState(null);
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -21,32 +21,20 @@ const TodoById = () => {
   useEffect(() => {
     let isMounted = true;
 
-    const getTasks = async () => {
-      setLoading(true);
+    setLoading(true);
 
-      try {
-        const q = query(collection(db, "tasks"), where("id", "==", Number(id)));
-        const querySnapshot = await getDocs(q);
-        const tasksArray = [];
-
-        querySnapshot.forEach((doc) => {
-          tasksArray.push(doc.data());
-        });
-
-        if (isMounted) {
-          setTask(tasksArray.length > 0 ? tasksArray[0] : null);
-        }
-      } catch (error) {
-        if (isMounted) {
-            setTask(null);
-            setError('Houve algum erro ao processar o documento. Tente novamente mais tarde!');
-          }
-      } finally {
+    const getTask = async () => {
+      const { message, success, data } = await getTaskByIdAction(id);
+  
+      if (isMounted) {
         setLoading(false);
+        setTask(data);
+        setMessage(message);
+        setError(!success);
       }
     };
-
-    getTasks();
+  
+    getTask();
 
     return () => {
       isMounted = false;
@@ -68,7 +56,7 @@ const TodoById = () => {
 
       {loading && <Loading />}
       
-      {error && <p className="error">{error}</p>}
+      {error && <p className="error">{message}</p>}
     </div>
   );
 };

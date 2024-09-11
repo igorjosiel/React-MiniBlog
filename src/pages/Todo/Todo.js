@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { FaBook, FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import { useAuthValue } from "../../contexts/AuthContext";
 import Loading from "../../components/Loading";
-import styles from "./Todo.module.css";
 import { getTasksAction } from '../../services/actions/tasksActions';
+import styles from "./Todo.module.css";
 
 const Todo = () => {
   const [tasks, setTasks] = useState([]);
